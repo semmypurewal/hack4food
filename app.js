@@ -23,5 +23,6 @@ app.get("/", function (req, res) {
 });
 
 app.post("/communities", communityController.create);
+app.get("/communities.json", communityController.list);
 app.get("/communities/:community.json", communityController.show);
 app.post("/text", textController.incoming);

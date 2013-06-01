@@ -47,6 +47,18 @@ CommunityController = function () {
         });
     };
 
+    this.list = function (req, res) {
+        Community.find(function (err, result) {
+            if (err !== null) {
+                res.send(500);
+            } else {
+                res.json(result.map(function (community) {
+                    return community.name;
+                }));
+            }
+        });
+    };
+
     this.destroy = function (req, res) {
         
     };
