@@ -18,7 +18,6 @@ var messages = [
         "shilob"
     )
 ];
-console.log(messages);
 
 /**********************************************************
  * Globals
@@ -136,7 +135,8 @@ $(document).ready(function(){
     });
 
     // Fill message list with dummy data -- TODO REMOVE
-    setMessageTable( messages );
+    
+    $(select).trigger('change');
 });
 
 /**
@@ -181,8 +181,6 @@ function setMessageTable( messages ) {
  * @param {string} endPoint REST endpoint
  */
 function getMessages( endPoint ) {
-    console.log(endPoint);
-
     var restUrl = restUrlBase + endPoint + ".json";
     $.get(
           restUrl,
