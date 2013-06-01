@@ -3,11 +3,11 @@ body {
 }
 
 header {
-    height: 133px;
+    /*height: 133px;*/
     background: #60B9CE;
-    background-image: url('../img/header-background.jpg');
-    background-repeat: no-repeat;
-    background-position: right;
+    /*background-image: url('../img/header-background.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 100px 0;*/
 }
 
 h1 {
@@ -26,6 +26,12 @@ li {
     margin: 10px 0;
 }
 
+/*table {
+    border-style: solid;
+    border-width: 1px;
+    width: inherit;
+}*/
+
 td {
     padding: 10px 10px;
 }
@@ -36,6 +42,11 @@ tr {
 
 ul {
     list-style-type: none;
+    margin-left: 0px
+}
+
+.center-margin {
+    margin: 0 auto;
 }
 
 .checkbox-column {
@@ -88,7 +99,7 @@ ul {
 }
 
 .text-body-column {
-
+    width: 200px;
 }
 
 #community-data {
@@ -109,4 +120,8 @@ ul {
 
 #sms-table {
 
+}
+
+#sms-text {
+    width: 90%;
 }

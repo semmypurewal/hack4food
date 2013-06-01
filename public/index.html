@@ -6,15 +6,16 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <header>
-        <span class="header-title">Press 1 For Food</span>
-    </header>
     <div class="container">
+        <header class="row">
+            <img class="span12" src="img/header-background.jpg" alt="Press 1 For Food Logo Image"/>
+        </header>
         <div class="row">
             <div class="community span4">
+                <h2>Community</h2>
                 <select id="community-select">
-                    <option>Shiloh</option>
-                    <option>East</option>
+                    <option value="Shiloh">Shiloh</option>
+                    <option value="Pisgah View">Pisgah View</option>
                     <option>West</option>
                     <option>North</option>
                 </select>
@@ -40,49 +41,34 @@
                 </div>
             </div>
 
-            <form>
-                <div class="sms-info span4">
-                    <div class="date">
-                        <select id="date-range">
-                            <option>2013-06-01 - 2013-06-07</option>
-                            <option>2013-06-08 - 2013-06-14</option>
-                            <option>2013-06-14 - 2013-06-21</option>
-                        </select>
-                    </div>
-
-                    <div class="sms-details">
-                        <table id="sms-list">
-                            <tr>
-                                <th class="checkbox-column"></th>
-                                <th class="phone-number-column">Number</th>
-                                <th class="text-body-column">Body</th>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>828-507-0546</td>
-                                <td>Haaaaaaaay!</td>
-                            </tr>
-                            <tr class="sms-sent">
-                                <td><input type="checkbox" /></td>
-                                <td>828-123-0546</td>
-                                <td>Hay!</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>828-999-0546</td>
-                                <td>Haaaaay!</td>
-                            </tr>
-                        </table>
-                    </div>
+            <div class="sms-info span4">
+                <h2>Messages</h2>
+                <div class="date">
+                    <select id="date-range">
+                        <option>2013-06-01 - 2013-06-07</option>
+                        <option>2013-06-08 - 2013-06-14</option>
+                        <option>2013-06-14 - 2013-06-21</option>
+                    </select>
                 </div>
 
-                <div class="sms-outgoing span4">
-                    <textarea id="sms-text" name="sms-text"></textarea>
-                    <input type="hidden" id="sms-recipients" name="sms-recipients" />
-                    <br/>
-                    <button id="sms-send">Send</button>
+                <div class="sms-details">
+                    <table id="sms-list">
+                        <tr>
+                            <th class="checkbox-column"></th>
+                            <th class="phone-number-column">Number</th>
+                            <th class="text-body-column">Body</th>
+                        </tr>
+                    </table>
                 </div>
-            </form>
+            </div>
+
+            <div class="sms-outgoing span4">
+                <h2>Send</h2>
+                <textarea cols="40" rows="3" maxlength="140" id="sms-text" name="sms-text"></textarea>
+                <input type="hidden" id="sms-recipients" name="sms-recipients" />
+                <br/>
+                <button id="sms-send" type="button">Send</button>
+            </div>
         </div>
     </div>
 

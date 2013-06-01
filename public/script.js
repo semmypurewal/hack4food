@@ -5,7 +5,7 @@ var messages = [
     new Message (
         "828-867-5309",
         1370110898,
-        "Shiloh"
+        "Shiloh I'm also a;lskdjf;alsdkfja;sldfkja;sdlkfja;sdlfkjas"
     ),
     new Message (
         "828-867-5310",
@@ -24,8 +24,57 @@ var messages = [
  **********************************************************/
 var restUrlBase = "http://hack4food.herokuapp.com/communities/";
 var sendSmsUrl = "";
-var communities = [];
-//var messages = [];
+
+window.communities = {
+    Shiloh: {
+        endPoint: "shiloh",
+        address: "123 Shiloh Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "43%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "34%"
+            }, {
+                label: "Population",
+                statistic: "1,464,356"
+            }
+        ]
+    },
+    "Hillcrest": {
+        endPoint: "hillcrest",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
+            }
+        ]
+    },
+    "Pisgah View": {
+        endPoint: "pisgahview",
+        address: "123 Pisgah Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "53%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "94%"
+            }, {
+                label: "Population",
+                statistic: "3,464,356"
+            }
+        ]
+    }
+};
 
 /**********************************************************
  * Objects
@@ -48,13 +97,13 @@ function Community( endPoint, address, funFact1 ) {
 /**
  * Creates an instance of Message
  *
- * @param {string} number Phone number that sent SMS
+ * @param {string} phone Phone number that sent SMS
  * @param {timestamp} date Timestamp SMS was sent
  * @param {string} text Timestamp SMS was sent
  * @returns {Message}
  */
-function Message ( number, date, text ) {
-    this.number = number;
+function Message ( phone, date, text ) {
+    this.phone = phone;
     this.date = date;
     this.text = text;
 }
@@ -79,7 +128,7 @@ $(document).ready(function(){
     $(select).on('change', function(){
         changeCommunity( communities[$(this).val()] );
     });
-    
+
     // Attach send function to send button
     $('#sms-send').on('click', function(){
         sendSMS();
@@ -96,21 +145,7 @@ $(document).ready(function(){
  * @returns {setCommunities.communities}
  */
 function setCommunities( communities ) {
-    communities["Shiloh"] = new Community(
-        "shiloh",
-        "123 Shiloh Rd",
-        "Pumpkin Love: 41%"
-    );
-    communities["Pisgah View"] = new Community(
-        "pisgahview",
-        "345 Pisgah View Way",
-        "Pumpkin Love: 22%"
-    );
-    communities["Other"] = new Community(
-        "other",
-        "",
-        ""
-    );
+    window.communities = communities;
 
     return communities;
 }
@@ -124,16 +159,18 @@ function setCommunities( communities ) {
 function setMessageTable( messages ) {
     $('#sms-list').empty();
 
-    $('#sms-list').html('<th></th><th>Number</th><th>Body</th>');
+    if (messages.length > 0) {
+        $('#sms-list').html('<th class="checkbox-column"></th><th class="phone-number-column">Number</th><th class="text-body-column">Body</th>');
 
-    for ( var i = 0; i < messages.length; i++ ) {
-        $('#sms-list').append(
-            '<tr>' +
-            '<td><input type="checkbox" id="cbx_' + messages[i].number + '"></td>' +
-            '<td>' + messages[i].number + '</td>' +
-            '<td>' + messages[i].text + '</td>' +
-            '</tr>'
-        );
+        for ( var i = 0; i < messages.length; i++ ) {
+            $('#sms-list').append(
+                    '<tr>' +
+                    '<td><input type="checkbox" id="cbx_' + messages[i].phone + '"></td>' +
+                    '<td>' + messages[i].phone + '</td>' +
+                    '<td>' + messages[i].text + '</td>' +
+                    '</tr>'
+            );
+        }
     }
 }
 
@@ -164,30 +201,50 @@ function getMessages( endPoint ) {
  * @returns {Array.<Message>}
  */
 function sendSMS( ) {
-    var recipients;
-    
-    var sms = { message : $("#sms-text").text(),
+    var recipients = $("#sms-list").find("input:checked").map(function() {
+        return this.id.substr(4);
+    }).toArray();
+
+    var sms = { message : $("#sms-text").val(),
                 recipients : recipients
     };
-    
+
     $.post(
             sendSmsUrl,
             sms,
             function(data, status){
-                
+
             }
     );
 }
 
 // --COMMUNITY---------------------------------------------
 function changeCommunity( community ) {
-    // TODO: enable this once we're ready to AJAX
     getMessages( community.endPoint );
 }
 
 function setCommunityInfo( community ) {
 
 }
+
+// Render the community info box on community-select change.
+$("#community-select").on('change', function(event) {
+    var $infoBox = $(".community").find("#info-box");
+    $infoBox.find("li").remove();
+
+    var community = communities[$("#community-select").val()];
+    _.each(community.facts, function(fact, index) {
+        var $label = $("<span />").addClass("statistic-label");
+        $label.text(fact.label);
+        var $value = $("<span />").addClass("statistic-value");
+        $value.text(fact.statistic);
+
+        var $li = $("<li/>");
+        $li.html($label.html() + ": " + $value.html());
+
+        $infoBox.append($li);
+    }, this);
+});
 
 // --DATE PICKER DROPDOWN----------------------------------
 // Generate an array of objects with startDate and endDate properties
