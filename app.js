@@ -18,7 +18,7 @@ app.configure(function () {
 mongoose.connect(mongoServer);
 
 app.get("/", function (req, res) {
-    res.send("Welcome to the hack4food app! " + numTexts);
+    res.sendFile("index.html");
 });
 
 app.post("/communities", function (req, res) {
