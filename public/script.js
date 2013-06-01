@@ -18,11 +18,12 @@ var messages = [
         "shilob"
     )
 ];
+console.log(messages);
 
 /**********************************************************
  * Globals
  **********************************************************/
-var restUrlBase = "http://hack4food.herokuapp.com/communities/";
+var restUrlBase = "communities/";
 var sendSmsUrl = "";
 
 window.communities = {
@@ -105,7 +106,7 @@ function Community( endPoint, address, funFact1 ) {
 function Message ( phone, date, text ) {
     this.phone = phone;
     this.date = date;
-    this.text = text;
+    this.body = text;
 }
 
 /**********************************************************
@@ -167,7 +168,7 @@ function setMessageTable( messages ) {
                     '<tr>' +
                     '<td><input type="checkbox" id="cbx_' + messages[i].phone + '"></td>' +
                     '<td>' + messages[i].phone + '</td>' +
-                    '<td>' + messages[i].text + '</td>' +
+                    '<td>' + messages[i].body + '</td>' +
                     '</tr>'
             );
         }
@@ -187,6 +188,7 @@ function getMessages( endPoint ) {
           restUrl,
           function(data, status) {
               if (status === "success") {
+                  debugger;
                   messages = data;
                   var filtered = filterSmsData(messages, currentWeek.startDate, currentWeek.endDate);
                   setMessageTable(filtered);
