@@ -33,7 +33,7 @@ CommunityController = function () {
                 res.send(404);
             } else {
                 texts = result.texts.map(function (text) {
-                    var timestamp = new Date(text.date).getTime();
+                    var timestamp = parseInt(new Date(text.date).getTime()/1000, 10);
 
                     return {
                         "body":text.body,
