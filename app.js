@@ -1,10 +1,9 @@
 var express = require("express"),
     app = express(),
-    server = require("http").createServer(app).listen(process.env.PORT || 3001),
-    twilio = require("twilio");
+    TextController = require("./controllers/text_controller.js")(),
+    server = require("http").createServer(app).listen(process.env.PORT || 3001);
 
-var temp = "nothing";
-
+var numTexts = 0;
 
 app.configure(function () {
     app.use(express.static("public"));
@@ -12,19 +11,10 @@ app.configure(function () {
 });
 
 app.get("/", function (req, res) {
-    res.send(temp);
-});
-
-app.get("/hello", function (req, res) {
-    res.send("hello world!");
+    res.send("Welcome to the hack4food app! " + numTexts);
 });
 
 app.post("/text", function (req, res) {
-    var twiml = new twilio.TwimlResponse();
-    temp = req.body;
-    //twiml
-    console.log(req.body);
-    res.type('text/xml');
-    res.send(twiml.toString());
+    
 });
 
