@@ -8,6 +8,8 @@ TextController = function () {
     }
 
     this.incoming = function (req, res) {
+        //check to make sure from twilio
+
         var twiml = new twilio.TwimlResponse(),
             body = req.body.Body,
             date = new Date(),
