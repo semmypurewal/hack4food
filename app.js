@@ -1,6 +1,7 @@
 var express = require("express"),
     app = express(),
     textController = require("./controllers/text_controller.js")(),
+    communityController = require("./controllers/community_controller.js")(),
     mongoose = require("mongoose"),
     mongoServer,
     Community = require("./models/community.js"),
@@ -21,34 +22,9 @@ app.get("/", function (req, res) {
     res.sendFile("index.html");
 });
 
-app.post("/communities", function (req, res) {
-    var c;
+app.post("/communities", communityController.create);
+app.get("/communities/:community.json", communityController.show);
 
-    if (req.body.name === undefined) {
-        res.send(400);
-    } else {
-        c = new Community({"name":req.body.name});
-        c.save(function (err, result) {
-            if (err !== null) {
-                res.send(500);
-            } else {
-                res.send(200);
-            }
-        });
-    }
-});
-
-app.get("/communities/:community.json", function (req, res) {
-    Community.findOne({"name":req.params.community}, function (err, result) {
-        if (err !== null) {
-            res.send(500);
-        } else if (result === null) {
-            res.send(404);
-        } else {
-            res.json(result.texts);
-        }
-    });
-});
 
 app.post("/text", function (req, res) {
     numTexts++;
