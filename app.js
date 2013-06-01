@@ -1,6 +1,7 @@
 var express = require("express"),
     app = express(),
     textController = require("./controllers/text_controller.js")(),
+    communityController = require("./controllers/community_controller.js")(),
     mongoose = require("mongoose"),
     mongoServer,
     Community = require("./models/community.js"),
@@ -18,40 +19,10 @@ app.configure(function () {
 mongoose.connect(mongoServer);
 
 app.get("/", function (req, res) {
-    res.send("Welcome to the hack4food app! " + numTexts);
+    res.sendFile("index.html");
 });
 
-app.post("/communities", function (req, res) {
-    var c;
-
-    if (req.body.name === undefined) {
-        res.send(400);
-    } else {
-        c = new Community({"name":req.body.name});
-        c.save(function (err, result) {
-            if (err !== null) {
-                res.send(500);
-            } else {
-                res.send(200);
-            }
-        });
-    }
-});
-
-app.get("/communities/:community.json", function (req, res) {
-    Community.findOne({"name":req.params.community}, function (err, result) {
-        if (err !== null) {
-            res.send(500);
-        } else if (result === null) {
-            res.send(404);
-        } else {
-            res.json(result.texts);
-        }
-    });
-});
-
-app.post("/text", function (req, res) {
-    numTexts++;
-    textController.incoming(req, res);
-});
-
+app.post("/communities", communityController.create);
+app.get("/communities.json", communityController.list);
+app.get("/communities/:community.json", communityController.show);
+app.post("/text", textController.incoming);
