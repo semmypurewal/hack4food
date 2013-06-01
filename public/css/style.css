@@ -50,7 +50,7 @@ ul {
 }
 
 .checkbox-column {
-
+    width: 44px;
 }
 
 .communtiy {
@@ -75,7 +75,7 @@ ul {
 }
 
 .phone-number-column {
-    width: 150px;
+    width: 90px;
 }
 
 .sms-details {
@@ -99,7 +99,7 @@ ul {
 }
 
 .text-body-column {
-    width: 200px;
+    width: 160px;
 }
 
 #community-data {
@@ -115,7 +115,7 @@ ul {
 }
 
 #sms-list {
- /*visibility: hidden;*/
+
 }
 
 #sms-table {

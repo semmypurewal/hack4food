@@ -42,6 +42,54 @@ window.communities = {
             }
         ]
     },
+    "Kenilworth": {
+        endPoint: "kenilworth",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
+            }
+        ]
+    },
+    "Emma": {
+        endPoint: "emma",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
+            }
+        ]
+    },
+    "Oakley": {
+        endPoint: "oakley",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
+            }
+        ]
+    },
     "Hillcrest": {
         endPoint: "hillcrest",
         address: "123 Hillcrest Rd",
@@ -58,19 +106,51 @@ window.communities = {
             }
         ]
     },
-    "Pisgah View": {
-        endPoint: "pisgahview",
-        address: "123 Pisgah Rd",
+    "Riverview": {
+        endPoint: "riverview",
+        address: "123 Hillcrest Rd",
         zipCode: "28804",
         facts: [{
                 label: "Apple love",
-                statistic: "53%"
+                statistic: "23%"
             }, {
                 label: "Pumpkin love",
-                statistic: "94%"
+                statistic: "84%"
             }, {
                 label: "Population",
-                statistic: "3,464,356"
+                statistic: "2,464,356"
+            }
+        ]
+    },
+    "Klondyke": {
+        endPoint: "klondyke",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
+            }
+        ]
+    },
+    "Southside": {
+        endPoint: "southside",
+        address: "123 Hillcrest Rd",
+        zipCode: "28804",
+        facts: [{
+                label: "Apple love",
+                statistic: "23%"
+            }, {
+                label: "Pumpkin love",
+                statistic: "84%"
+            }, {
+                label: "Population",
+                statistic: "2,464,356"
             }
         ]
     }
@@ -135,7 +215,7 @@ $(document).ready(function(){
     });
 
     // Fill message list with dummy data -- TODO REMOVE
-    
+
     $(select).trigger('change');
 });
 
@@ -160,9 +240,8 @@ function setCommunities( communities ) {
 function setMessageTable( messages ) {
     $('#sms-list').empty();
 
+    $('#sms-list').html('<th class="checkbox-column">Select</th><th class="phone-number-column">Number</th><th class="text-body-column">Body</th>');
     if (messages.length > 0) {
-        $('#sms-list').html('<th class="checkbox-column"></th><th class="phone-number-column">Number</th><th class="text-body-column">Body</th>');
-
         for ( var i = 0; i < messages.length; i++ ) {
             $('#sms-list').append(
                     '<tr>' +
