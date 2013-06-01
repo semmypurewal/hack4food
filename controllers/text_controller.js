@@ -11,54 +11,55 @@ TextController = function () {
 
     this.incoming = function (req, res) {
         //check to make sure from twilio
+        if (twilio.validateExpressRequest(req, "d10a5723669ae9a510069ceb1696f397")) {     
+            var twiml = new twilio.TwimlResponse(),
+                body = req.body.Body,
+                community = "other",
+                phoneNumber = req.body.From;
 
-        var twiml = new twilio.TwimlResponse(),
-            body = req.body.Body,
-            community = "other",
-            phoneNumber = req.body.From;
+            Community.find(function (err, results) {
+                var communities;
 
-        Community.find(function (err, results) {
-            var communities;
-
-            if (err !== null) {
-                res.send(500);
-            } else {
-                communities = results.map(function (comm) {
-                    return comm.name;
-                });
-
-                communities.forEach(function (comm) {
-                    console.log("we're checking comm " + comm);
-                    if (body.toLowerCase().indexOf(comm) > -1) {
-                        console.log("got it!");
-                        community = comm;
-                    }
-                });
-            }
-
-            Community.findOne({"name":community}, function (err, comm) {
                 if (err !== null) {
                     res.send(500);
                 } else {
-                    comm.texts.push({
-                        "body": body,
-                        "phone":phoneNumber
+                    communities = results.map(function (comm) {
+                        return comm.name;
                     });
                     
-                    comm.save(function (err, result) {
-                        if (err !== null) {
-                            res.send(500);
+                    communities.forEach(function (comm) {
+                        console.log("we're checking comm " + comm);
+                        if (body.toLowerCase().indexOf(comm) > -1) {
+                            console.log("got it!");
+                            community = comm;
                         }
                     });
                 }
+                
+                Community.findOne({"name":community}, function (err, comm) {
+                    if (err !== null) {
+                        res.send(500);
+                    } else {
+                        comm.texts.push({
+                            "body": body,
+                            "phone":phoneNumber
+                        });
+                        
+                        comm.save(function (err, result) {
+                            if (err !== null) {
+                                res.send(500);
+                            }
+                        });
+                    }
+                });
             });
-        });
-
-
-
-        //twiml
-        res.type('text/xml');
-        res.send(twiml.toString());
+            //twiml
+            res.type('text/xml');
+            res.send(twiml.toString());
+        } else {
+            res.send(400);
+        }
+        
     };
 };
 
