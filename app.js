@@ -2,13 +2,15 @@ var express = require("express"),
     app = express(),
     server = require("http").createServer(app).listen(process.env.PORT || 3001);
 
+var temp = "nothing";
+
 app.configure(function () {
     app.use(express.static("public"));
     app.use(express.bodyParser());
 });
 
 app.get("/", function (req, res) {
-    res.send("hello world!");
+    res.send(temp);
 });
 
 app.get("/hello", function (req, res) {
@@ -16,6 +18,7 @@ app.get("/hello", function (req, res) {
 });
 
 app.post("/text", function (req, res) {
-    console.log(req.body);
+    temp = req.body;
+    res.send("thank you");
 });
 
