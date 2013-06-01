@@ -1,8 +1,10 @@
 var express = require("express"),
     app = express(),
-    server = require("http").createServer(app).listen(process.env.PORT || 3001);
+    server = require("http").createServer(app).listen(process.env.PORT || 3001),
+    twilio = require("twilio");
 
 var temp = "nothing";
+
 
 app.configure(function () {
     app.use(express.static("public"));
@@ -18,7 +20,11 @@ app.get("/hello", function (req, res) {
 });
 
 app.post("/text", function (req, res) {
-    temp = req.body;
-    res.send("thank you");
+    var twiml = new twilio.TwimlResponse();
+    
+    //twiml
+    console.log(req.body);
+    res.type('text/xml');
+    res.send(twiml.toString());
 });
 
