@@ -5,7 +5,7 @@ var messages = [
     new Message (
         "828-867-5309",
         1370110898,
-        "Shiloh I'm also a;lskdjf;alsdkfja;sldfkja;sdlkfja;sdlfkjas"
+        "Shiloh I'm also interested in this and this and this"
     ),
     new Message (
         "828-867-5310",
