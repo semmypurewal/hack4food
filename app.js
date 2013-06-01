@@ -21,7 +21,7 @@ app.get("/hello", function (req, res) {
 
 app.post("/text", function (req, res) {
     var twiml = new twilio.TwimlResponse();
-    
+    temp = req.body;
     //twiml
     console.log(req.body);
     res.type('text/xml');
