@@ -186,7 +186,6 @@ function getMessages( endPoint ) {
           restUrl,
           function(data, status) {
               if (status === "success") {
-                  debugger;
                   messages = data;
                   var filtered = filterSmsData(messages, currentWeek.startDate, currentWeek.endDate);
                   setMessageTable(filtered);
