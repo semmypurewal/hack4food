@@ -22,7 +22,8 @@ var messages = [
 /**********************************************************
  * Globals
  **********************************************************/
-var restUrlBase = "";
+var restUrlBase = "http://hack4food.herokuapp.com/communities/";
+var sendSmsUrl = "";
 var communities = [];
 //var messages = [];
 
@@ -77,6 +78,11 @@ $(document).ready(function(){
     // Attach community list change listener
     $(select).on('change', function(){
         changeCommunity( communities[$(this).val()] );
+    });
+    
+    // Attach send function to send button
+    $('#sms-send').on('click', function(){
+        sendSMS();
     });
 
     // Fill message list with dummy data -- TODO REMOVE
@@ -139,13 +145,14 @@ function setMessageTable( messages ) {
 function getMessages( endPoint ) {
     console.log(endPoint);
 
-    var restUrl = restUrlBase + endPoint;
+    var restUrl = restUrlBase + endPoint + ".json";
     $.get(
           restUrl,
           function(data, status) {
               if (status === "success") {
                   messages = data;
-                  setMessageTable(data);
+                  var filtered = filterSmsData(messages, currentWeek.startDate, currentWeek.endDate);
+                  setMessageTable(filtered);
               }
           }
     );
@@ -156,72 +163,80 @@ function getMessages( endPoint ) {
  *
  * @returns {Array.<Message>}
  */
-function getSelectedMessages( ) {
-
+function sendSMS( ) {
+    var recipients;
+    
+    var sms = { message : $("#sms-text").text(),
+                recipients : recipients
+    };
+    
+    $.post(
+            sendSmsUrl,
+            sms,
+            function(data, status){
+                
+            }
+    );
 }
 
 // --COMMUNITY---------------------------------------------
 function changeCommunity( community ) {
     // TODO: enable this once we're ready to AJAX
-    //getMessages( community.endPoint );
+    getMessages( community.endPoint );
 }
 
 function setCommunityInfo( community ) {
 
 }
 
-// --DATE--------------------------------------------------
-
-
-
-
 // --DATE PICKER DROPDOWN----------------------------------
+// Generate an array of objects with startDate and endDate properties
+// representing a givent week.
+function generateWeeks(endDate, numWeeks) {
+    var currentWeek;
+    var i;
+    var currentWeek = {
+        startDate: moment(endDate).subtract('days', 6),
+        endDate: moment(endDate)
+    };
+    var weeks = [ currentWeek ];
 
-    // Generate an array of objects with startDate and endDate properties
-    // representing a givent week.
-    function generateWeeks(endDate, numWeeks) {
-        var currentWeek;
-        var i;
-        var currentWeek = {
-            startDate: moment(endDate).subtract('days', 6),
-            endDate: moment(endDate)
+    for (i = 1; i < numWeeks; i++) {
+        currentWeek = {
+            startDate: moment(currentWeek.startDate).subtract('days', 7),
+            endDate: moment(currentWeek.endDate).subtract('days', 7)
         };
-        var weeks = [ currentWeek ];
-
-        for (i = 1; i < numWeeks; i++) {
-            currentWeek = {
-                startDate: moment(currentWeek.startDate).subtract('days', 7),
-                endDate: moment(currentWeek.endDate).subtract('days', 7)
-            };
-            weeks.push(currentWeek);
-        }
-
-        return weeks;
+        weeks.push(currentWeek);
     }
 
-    function filterSmsData(unfilteredData, startMoment, endMoment) {
-        return _.filter(unfilteredData, function(item) {
-            var currentMoment = moment(item.date * 1000);
-            return (currentMoment.isBefore(endMoment, "day") &&
-                currentMoment.isAfter(startMoment, "day")) ||
-                currentMoment.isSame(endMoment, "day") ||
-                currentMoment.isSame(startMoment, "day")
-        });
-    }
+    return weeks;
+}
 
-    // 0=Sunday, ..., 6=Saturday
-    var startDay = 6;
-
-    var nextStartDate = moment();
-    nextStartDate.add('days', 6 - nextStartDate.day());
-    nextStartDate.startOf('day');
-    window.weeks = generateWeeks(nextStartDate, 6);
-
-
-    $("#date-range").weeklyDatePicker({
-        weeks: weeks,
-        onchange: function(week, index, weeks) {
-            var filtered = filterSmsData(messages, week.startDate, week.endDate);
-            setMessageTable(filtered);
-        }
+function filterSmsData(unfilteredData, startMoment, endMoment) {
+    return _.filter(unfilteredData, function(item) {
+        var currentMoment = moment(item.date * 1000);
+        return (currentMoment.isBefore(endMoment, "day") &&
+            currentMoment.isAfter(startMoment, "day")) ||
+            currentMoment.isSame(endMoment, "day") ||
+            currentMoment.isSame(startMoment, "day")
     });
+}
+
+// 0=Sunday, ..., 6=Saturday
+var startDay = 6;
+
+var nextStartDate = moment();
+nextStartDate.add('days', 6 - nextStartDate.day());
+nextStartDate.startOf('day');
+window.weeks = generateWeeks(nextStartDate, 6);
+window.currentWeek = weeks[0];
+
+
+$("#date-range").weeklyDatePicker({
+    weeks: weeks,
+    onchange: function(week, index, weeks) {
+        var filtered = filterSmsData(messages, week.startDate, week.endDate);
+        setMessageTable(filtered);
+        currentWeek = week;
+    }
+});
