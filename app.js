@@ -24,10 +24,4 @@ app.get("/", function (req, res) {
 
 app.post("/communities", communityController.create);
 app.get("/communities/:community.json", communityController.show);
-
-
-app.post("/text", function (req, res) {
-    numTexts++;
-    textController.incoming(req, res);
-});
-
+app.post("/text", textController.incoming);

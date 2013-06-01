@@ -25,12 +25,24 @@ CommunityController = function () {
 
     this.show = function (req, res) {
         Community.findOne({"name":req.params.community}, function (err, result) {
+            var texts;
+
             if (err !== null) {
                 res.send(500);
             } else if (result === null) {
                 res.send(404);
             } else {
-                res.json(result.texts);
+                texts = result.texts.map(function (text) {
+                    var timestamp = new Date(text.date).getTime();
+
+                    return {
+                        "body":text.body,
+                        "date":timestamp,
+                        "phone":text.phone
+                    }
+                });
+                
+                res.json(texts);
             }
         });
     };
