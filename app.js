@@ -11,9 +11,11 @@ app.configure(function () {
     app.use(express.static("public"));
     app.use(express.bodyParser());
     mongoServer = process.env.MONGOHQ_URL || "mongodb://localhost/hack4food_development";
-
     console.log(mongoServer);
 });
+
+
+mongoose.connect(mongoServer);
 
 app.get("/", function (req, res) {
     res.send("Welcome to the hack4food app! " + numTexts);
