@@ -1,6 +1,6 @@
 var express = require("express"),
     app = express(),
-    server = require("http").createServer(app).listen(3001);
+    server = require("http").createServer(app).listen(process.env.PORT || 3001);
 
 app.configure(function () {
     app.use(express.static("public"));
