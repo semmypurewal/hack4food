@@ -1,0 +1,100 @@
+body {
+    background-color: #C0F56E;
+}
+
+header {
+    /*width: 200px;*/
+    height: 133px;
+    background: #60B9CE;
+    background-image: url('img/local-produce.jpg');
+    background-repeat: no-repeat;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+li {
+    margin: 10px 0;
+}
+
+td {
+    padding: 10px 10px;
+}
+
+tr {
+
+}
+
+ul {
+    list-style-type: none;
+}
+
+.communtiy {
+    /*min-width: 200px;*/
+    /*width: 25%;*/
+    /*float: right*/
+}
+
+.container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.date {
+    margin: 0 0 10px 0;
+}
+
+.info {
+
+}
+
+.sms-details {
+
+}
+
+.sms-info {
+    /*min-width: 600px;*/
+    /*width: 75%;*/
+    /*float: left*/
+}
+
+.sms-sent {
+
+}
+
+.statistic-label {
+
+}
+
+.statistic-value {
+
+}
+
+#community-data {
+
+}
+
+#date-range {
+
+}
+
+#info-box {
+
+}
+
+#sms-list {
+
+}
+
+#sms-table {
+
+}
