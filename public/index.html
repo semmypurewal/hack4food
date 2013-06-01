@@ -11,44 +11,7 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="span8">
-            <div class="sms-info">
-                <div class="date">
-                    <select id="date-range">
-                        <option>2013-06-01 - 2013-06-07</option>
-                        <option>2013-06-08 - 2013-06-14</option>
-                        <option>2013-06-14 - 2013-06-21</option>
-                    </select>
-                </div>
-
-                <div class="sms-details">
-                    <table id="sms-list">
-                        <tr>
-                            <th class="checkbox-column"></th>
-                            <th class="phone-number-column">Number</th>
-                            <th class="text-body-column">Body</th>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td>828-507-0546</td>
-                            <td>Haaaaaaaay!</td>
-                        </tr>
-                        <tr class="sms-sent">
-                            <td><input type="checkbox" /></td>
-                            <td>828-123-0546</td>
-                            <td>Hay!</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td>828-999-0546</td>
-                            <td>Haaaaay!</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-            <div class="span4">
-            <div class="community">
+            <div class="community span4">
                 <select id="community-select">
                     <option>Shiloh</option>
                     <option>East</option>
@@ -76,7 +39,50 @@
                     </ul>
                 </div>
             </div>
-        </div>
+
+            <form>
+                <div class="sms-info span4">
+                    <div class="date">
+                        <select id="date-range">
+                            <option>2013-06-01 - 2013-06-07</option>
+                            <option>2013-06-08 - 2013-06-14</option>
+                            <option>2013-06-14 - 2013-06-21</option>
+                        </select>
+                    </div>
+
+                    <div class="sms-details">
+                        <table id="sms-list">
+                            <tr>
+                                <th class="checkbox-column"></th>
+                                <th class="phone-number-column">Number</th>
+                                <th class="text-body-column">Body</th>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>828-507-0546</td>
+                                <td>Haaaaaaaay!</td>
+                            </tr>
+                            <tr class="sms-sent">
+                                <td><input type="checkbox" /></td>
+                                <td>828-123-0546</td>
+                                <td>Hay!</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>828-999-0546</td>
+                                <td>Haaaaay!</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sms-outgoing span4">
+                    <textarea id="sms-text" name="sms-text"></textarea>
+                    <input type="hidden" id="sms-recipients" name="sms-recipients" />
+                    <br/>
+                    <button id="sms-send">Send</button>
+                </div>
+            </form>
         </div>
     </div>
 
